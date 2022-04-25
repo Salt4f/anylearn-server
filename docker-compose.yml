@@ -9,6 +9,8 @@ services:
       - "ASPNETCORE_ENVIRONMENT=Development"
     depends_on: 
       - "pg"
+    volumes:
+      - "/etc/letsencrypt/live/vgafib.org:/app/certs"
     restart: unless-stopped
   pg:
     image: "postgres"
