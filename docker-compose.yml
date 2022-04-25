@@ -5,6 +5,8 @@ services:
     ports:
       - "9090:80"
       - "9091:443"
+    environment:
+      - "ASPNETCORE_ENVIRONMENT=Development"
     depends_on: 
       - "pg"
     restart: unless-stopped
@@ -14,6 +16,6 @@ services:
       - "POSTGRES_PASSWORD=anylearn"
       - "POSTGRES_USER=anylearn"
       - "POSTGRES_DB=anylearn"
-    volumes:
-      - ./pg/db_data:/var/lib/postgresql/data
+    #volumes:
+      #- ./pg/db_data:/var/lib/postgresql/data
     restart: unless-stopped
