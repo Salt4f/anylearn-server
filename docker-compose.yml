@@ -7,6 +7,7 @@ services:
       - "9091:443"
     depends_on: 
       - "pg"
+    restart: unless-stopped
   pg:
     image: "postgres"
     environment:
@@ -15,3 +16,4 @@ services:
       - "POSTGRES_DB=anylearn"
     volumes:
       - ./pg/db_data:/var/lib/postgresql/data
+    restart: unless-stopped
