@@ -1,0 +1,17 @@
+﻿version: "3"
+services:
+  app:
+    build: .
+    ports:
+      - "9090:80"
+      - "9091:443"
+    depends_on: 
+      - "pg"
+  pg:
+    image: "postgres"
+    environment:
+      - "POSTGRES_PASSWORD=anylearn"
+      - "POSTGRES_USER=anylearn"
+      - "POSTGRES_DB=anylearn"
+    volumes:
+      - ./pg/db_data:/var/lib/postgresql/data
