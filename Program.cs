@@ -17,6 +17,14 @@ builder.Services.AddDbContext<AnyLearnDatabaseContext>(opt =>
     .UseSnakeCaseNamingConvention();
 });
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -35,6 +43,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 //app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 

@@ -6,11 +6,13 @@ services:
       - "9090:80"
       - "9091:443"
     environment:
+      - "ASPNETCORE_URLS=https://+;http://+"
+      - "ASPNETCORE_HTTPS_PORT=9091"
       - "ASPNETCORE_ENVIRONMENT=Development"
     depends_on: 
       - "pg"
     volumes:
-      - "/etc/letsencrypt/live/vgafib.org:/app/certs"
+      - "/home/admin/pae/certs:/app/certs"
     restart: unless-stopped
   pg:
     image: "postgres"
@@ -18,6 +20,4 @@ services:
       - "POSTGRES_PASSWORD=anylearn"
       - "POSTGRES_USER=anylearn"
       - "POSTGRES_DB=anylearn"
-    #volumes:
-      #- ./pg/db_data:/var/lib/postgresql/data
     restart: unless-stopped
