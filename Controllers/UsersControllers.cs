@@ -49,15 +49,15 @@ namespace AnyLearnServer.Controllers
             var secret = _config.GetSection("Linkedin").GetValue<string>("Secret");
 
             string url = "https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=" +
-                HttpUtility.UrlEncode(code) +
+                code +
                 "&redirect_uri=" +
-                HttpUtility.UrlEncode("http://localhost:3000/linkedin") +
+                "http://localhost:3000/linkedin" +
                 "&client_id=" +
                 client +
                 "&client_secret=" +
                 secret;
-            _logger.LogInformation(url);
-            var res = await _httpClient.GetAsync(url);
+            _logger.LogInformation(HttpUtility.UrlEncode(url));
+            var res = await _httpClient.GetAsync(HttpUtility.UrlEncode(url));
             res.EnsureSuccessStatusCode();
             var body = await res.Content.ReadAsStringAsync();
             var json = JObject.Parse(body);
