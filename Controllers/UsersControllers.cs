@@ -54,6 +54,8 @@ namespace AnyLearnServer.Controllers
                 client +
                 "&client_secret=" +
                 secret;
+            _logger.LogInformation(url);
+            _logger.LogInformation(code);
             var res = await _httpClient.GetAsync(url);
             res.EnsureSuccessStatusCode();
             var body = await res.Content.ReadAsStringAsync();
