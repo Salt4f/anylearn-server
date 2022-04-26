@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using AnyLearnServer.Database;
 using AnyLearnServer.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -54,7 +55,7 @@ namespace AnyLearnServer.Controllers
                 client +
                 "&client_secret=" +
                 secret;
-            _logger.LogInformation(url);
+            _logger.LogInformation(HttpUtility.UrlEncode(url));
             _logger.LogInformation(code);
             var res = await _httpClient.GetAsync(url);
             res.EnsureSuccessStatusCode();
@@ -63,7 +64,7 @@ namespace AnyLearnServer.Controllers
             string? token = json.GetValue("access_token")!.Value<string>();
 
             url = "https://api.linkedin.com/v2/me?projection=(localizedFirstName,localizedLastName,profilePicture(displayImage~:playableStreams))";
-            var request = new HttpRequestMessage(HttpMethod.Get, url);
+            var request = new HttpRequestMessage(HttpMethod.Get, HttpUtility.UrlEncode(url));
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             res = await _httpClient.SendAsync(request);
             res.EnsureSuccessStatusCode();
@@ -88,7 +89,7 @@ namespace AnyLearnServer.Controllers
             };
 
             url = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))";
-            request = new HttpRequestMessage(HttpMethod.Get, url);
+            request = new HttpRequestMessage(HttpMethod.Get, HttpUtility.UrlEncode(url));
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             res = await _httpClient.SendAsync(request);
             res.EnsureSuccessStatusCode();
