@@ -25,6 +25,8 @@ builder.Services.AddCors(opt =>
     });
 });
 
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
