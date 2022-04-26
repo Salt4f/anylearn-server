@@ -17,5 +17,7 @@ namespace AnyLearnServer.Models
         public string? Password { get; set; }
         
         public string? Photo { get; set; }
+
+        public string? Token { get; set; }
     }
 }
