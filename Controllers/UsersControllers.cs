@@ -49,14 +49,14 @@ namespace AnyLearnServer.Controllers
             var secret = _config.GetValue<string>("LinkedIn.Secret");
 
             string url = "https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=" +
-                code +
-                "&redirect_uri=http://localhost:3000/linkedin" +
+                HttpUtility.UrlEncode(code) +
+                "&redirect_uri=" +
+                HttpUtility.UrlEncode("http://localhost:3000/linkedin") +
                 "&client_id=" +
                 client +
                 "&client_secret=" +
                 secret;
-            _logger.LogInformation(HttpUtility.UrlEncode(url));
-            _logger.LogInformation(code);
+            _logger.LogInformation(url);
             var res = await _httpClient.GetAsync(url);
             res.EnsureSuccessStatusCode();
             var body = await res.Content.ReadAsStringAsync();
@@ -64,7 +64,7 @@ namespace AnyLearnServer.Controllers
             string? token = json.GetValue("access_token")!.Value<string>();
 
             url = "https://api.linkedin.com/v2/me?projection=(localizedFirstName,localizedLastName,profilePicture(displayImage~:playableStreams))";
-            var request = new HttpRequestMessage(HttpMethod.Get, HttpUtility.UrlEncode(url));
+            var request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             res = await _httpClient.SendAsync(request);
             res.EnsureSuccessStatusCode();
@@ -89,7 +89,7 @@ namespace AnyLearnServer.Controllers
             };
 
             url = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))";
-            request = new HttpRequestMessage(HttpMethod.Get, HttpUtility.UrlEncode(url));
+            request = new HttpRequestMessage(HttpMethod.Get, url);
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             res = await _httpClient.SendAsync(request);
             res.EnsureSuccessStatusCode();
