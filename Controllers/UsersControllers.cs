@@ -45,8 +45,8 @@ namespace AnyLearnServer.Controllers
             _logger.LogInformation("POST /users/" + code);
             //Get access token
 
-            var client = _config.GetValue<string>("LinkedIn.ClientId");
-            var secret = _config.GetValue<string>("LinkedIn.Secret");
+            var client = _config.GetSection("Linkedin").GetValue<string>("CliendId");
+            var secret = _config.GetSection("Linkedin").GetValue<string>("Secret");
 
             string url = "https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=" +
                 HttpUtility.UrlEncode(code) +
