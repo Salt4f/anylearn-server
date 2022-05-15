@@ -128,7 +128,7 @@ namespace AnyLearnServer.Controllers
                 Token = Convert.ToBase64String(Encoding.ASCII.GetBytes(info.Email!))
             };
 
-            _context.Users!.Update(user);
+            await _context.Users!.AddAsync(user);
             await _context.SaveChangesAsync();
 
             return user;
