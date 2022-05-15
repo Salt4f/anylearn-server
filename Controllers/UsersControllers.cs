@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using AnyLearnServer.Database;
@@ -113,13 +114,33 @@ namespace AnyLearnServer.Controllers
             return user;
         }
 
-        /*
-         * name
-         * lastname
-         * password
-         * email
-         * 
-        */
+        [HttpPost, Route("/users/")]
+        public async Task<User?> PostAsync([FromBody] RegisterInfo info)
+        {
+            var user = new User()
+            {
+                Email = info.Email!,
+                Linkedin = false,
+                Name = info.Name!,
+                Surname = info.Surname!,
+                Password = info.Password,
+                Photo = null,
+                Token = Convert.ToBase64String(Encoding.ASCII.GetBytes(info.Email!))
+            };
+
+            _context.Users!.Update(user);
+            await _context.SaveChangesAsync();
+
+            return user;
+        }
+
+        public class RegisterInfo
+        {
+            public string? Name { get; set; }
+            public string? Surname { get; set; }
+            public string? Email { get; set; }
+            public string? Password { get; set; }
+        }
 
     }
 }
