@@ -138,10 +138,31 @@ namespace AnyLearnServer.Controllers
             return user;
         }
 
+        [HttpPost, Route("/users/login")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PostAsync([FromBody] LoginInfo info)
+        {
+            var user = await _context.Users!.FirstOrDefaultAsync(u => u.Email == info.Email);
+
+            if (user is null) return NotFound();
+
+            if (user.Password != info.Password) return Unauthorized();
+
+            return Ok(user);
+        }
+
         public class RegisterInfo
         {
             public string? Name { get; set; }
             public string? Surname { get; set; }
+            public string? Email { get; set; }
+            public string? Password { get; set; }
+        }
+
+        public class LoginInfo
+        {
             public string? Email { get; set; }
             public string? Password { get; set; }
         }

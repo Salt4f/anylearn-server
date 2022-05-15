@@ -25,7 +25,7 @@ namespace AnyLearnServer.Controllers
         }
 
         [HttpPost, Route("/mock/start")]
-        public async Task PostAsync()
+        public async Task<IActionResult> PostAsync()
         {
             _logger.LogInformation("POST /mock/start");
             
@@ -51,7 +51,7 @@ namespace AnyLearnServer.Controllers
 
             _logger.LogInformation("Saving changes...");
             await _context.SaveChangesAsync();
-            return;
+            return Ok();
         }
 
     }
