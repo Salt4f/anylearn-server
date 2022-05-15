@@ -28,6 +28,10 @@ namespace AnyLearnServer.Controllers
         public async Task PostAsync()
         {
             _logger.LogInformation("POST /mock/start");
+            
+            _logger.LogInformation("Recreating database...");
+            await _context.Database.EnsureDeletedAsync();
+            await _context.Database.EnsureCreatedAsync();
 
             _logger.LogInformation("Registering users...");
 
