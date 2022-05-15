@@ -26,7 +26,7 @@ namespace AnyLearnServer.Models
         public string? Description { get; set; }
         public string? Photo { get; set; }
         public int? Duration { get; set; }
-        public Categories? Categories { get; set; }
+        public Categories Categories { get; set; } = Categories.None;
 
     }
 

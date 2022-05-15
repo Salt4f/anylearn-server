@@ -22,6 +22,7 @@ namespace AnyLearnServer.Controllers
         [Route("/courses")]
         public async Task<Course> PostAsync([FromBody] Course course)
         {
+            _logger.LogInformation("POST /courses");
             await _context.Courses!.AddAsync(course);
             await _context.SaveChangesAsync();
             return course;
