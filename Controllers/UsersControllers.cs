@@ -117,7 +117,11 @@ namespace AnyLearnServer.Controllers
         [HttpPost, Route("/users/")]
         public async Task<User?> PostAsync([FromBody] RegisterInfo info)
         {
-            var user = new User()
+            var user = await _context.Users!.FirstOrDefaultAsync(u => u.Email == info.Email);
+
+            if (user != null) return user;
+
+            user = new User()
             {
                 Email = info.Email!,
                 Linkedin = false,
