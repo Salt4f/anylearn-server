@@ -13,15 +13,11 @@ namespace AnyLearnServer.Controllers
 
         private readonly ILogger<MockController> _logger;
         private readonly AnyLearnDatabaseContext _context;
-        private readonly HttpClient _httpClient;
-        private readonly IConfiguration _config;
 
-        public MockController(ILogger<MockController> logger, AnyLearnDatabaseContext context, HttpClient httpClient, IConfiguration config)
+        public MockController(ILogger<MockController> logger, AnyLearnDatabaseContext context)
         {
             _logger = logger;
             _context = context;
-            _httpClient = httpClient;
-            _config = config;
         }
 
         [HttpPost, Route("/mock/start")]
