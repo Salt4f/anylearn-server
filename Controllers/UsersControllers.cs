@@ -41,7 +41,7 @@ namespace AnyLearnServer.Controllers
             return user;
         }
 
-        [HttpPost, Route("/users/{code}")]
+        /*[HttpPost, Route("/users/{code}")]
         public async Task<User?> PostAsync(string code)
         {
             _logger.LogInformation("POST /users/" + code);
@@ -112,7 +112,7 @@ namespace AnyLearnServer.Controllers
             await _context.SaveChangesAsync();
 
             return user;
-        }
+        }*/
 
         [HttpPost, Route("/users/")]
         public async Task<User?> PostAsync([FromBody] RegisterInfo info)
